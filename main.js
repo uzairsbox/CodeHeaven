@@ -31,7 +31,7 @@ function addItem(e) {
    li.appendChild(button);
 
    itemList.appendChild(li);
-   
+
    // Saving it to local storage
    if (!localStorage.getItem('list')) {
       var locLi = [];
@@ -54,6 +54,15 @@ function removeItem(e) {
       //itemList.removeChild(li);
       //for newer browsers
       li.remove();
+      // removing from local storage
+      var list = JSON.parse(localStorage.getItem('list'));
+      // console.log(li.firstChild.textContent);
+      for(i = 0; i < list.length; i++){
+         if(list[i] == li.firstChild.textContent){
+            list.splice(i, 1);
+         }
+      }
+      localStorage.setItem('list', JSON.stringify(list));
    }
 }
 
@@ -79,23 +88,23 @@ function filterSearch(e) {
 // loading on screen
 function load() {
    if (localStorage.getItem('list') != null) {
-   var li = JSON.parse(localStorage.getItem('list'));
-   Array.from(li).forEach(set);
+      var li = JSON.parse(localStorage.getItem('list'));
+      Array.from(li).forEach(set);
 
-   function set(item) {
-      var li = document.createElement('li');
-      li.className = 'list-group-item';
-      //add text node with some input value
-      li.appendChild(document.createTextNode(item));
-      //del button
-      var button = document.createElement('button');
-      //add classname
-      button.className = 'btn btn-danger float-right btn-sm delete';
-      //x sign
-      button.appendChild(document.createTextNode('X'));
-      //appending li
-      li.appendChild(button);
-      itemList.appendChild(li);
+      function set(item) {
+         var li = document.createElement('li');
+         li.className = 'list-group-item';
+         //add text node with some input value
+         li.appendChild(document.createTextNode(item));
+         //del button
+         var button = document.createElement('button');
+         //add classname
+         button.className = 'btn btn-danger float-right btn-sm delete';
+         //x sign
+         button.appendChild(document.createTextNode('X'));
+         //appending li
+         li.appendChild(button);
+         itemList.appendChild(li);
+      }
    }
-}
 }
