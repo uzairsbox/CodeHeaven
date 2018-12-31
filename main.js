@@ -78,8 +78,10 @@ function filterSearch(e) {
 
 // loading on screen
 function load() {
+   if (localStorage.getItem('list') != null) {
    var li = JSON.parse(localStorage.getItem('list'));
    Array.from(li).forEach(set);
+
    function set(item) {
       var li = document.createElement('li');
       li.className = 'list-group-item';
@@ -95,4 +97,5 @@ function load() {
       li.appendChild(button);
       itemList.appendChild(li);
    }
+}
 }
